@@ -1,11 +1,11 @@
 package com.mailsender;
 
-import org.springframework.http.HttpStatus;
+
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @RestController
 @RequestMapping("/api")
@@ -29,6 +29,17 @@ public class MailController {
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok("Mail Successfully Send");
+    }
+
+
+
+    @PostMapping("/sendEmailWithImage")
+    public String sendEmailWithImage(@RequestParam String to,
+                                     @RequestParam String subject,
+                                     @RequestParam String text,
+                                     @RequestParam MultipartFile imageFile) {
+        emailService.sendEmailWithImage(to, subject, text, imageFile);
+        return "Email sent successfully!";
     }
 
 }
